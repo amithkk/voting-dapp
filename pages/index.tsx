@@ -1,65 +1,67 @@
+import { parseBytes32String } from "@ethersproject/strings";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import Link from "next/link";
 import Account from "../components/Account";
 import ETHBalance from "../components/ETHBalance";
+import { DAppHeader } from "../components/DAppHeader";
 import TokenBalance from "../components/TokenBalance";
 import useEagerConnect from "../hooks/useEagerConnect";
+import useVotingContract from "../hooks/useVotingContract";
+import useVotingDapp from "../hooks/useVotingDapp";
+import Stats from "../components/Stats";
+import { Container, Stack } from "@mantine/core";
+import { formatEther } from "@ethersproject/units";
+import BuyTokens from "../components/BuyTokens";
+import CandidateVotes from "../components/CandidateVotes";
+import { NotConnected } from "../components/NotConnected";
 
-const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
+const VOTING_TOKEN_ADDRESS = "0xF75F5881531D9627B1a6516f9DbD699c2c53B4d9";
 
 function Home() {
   const { account, library } = useWeb3React();
+
+  const [
+    contractState,
+    contractBalance,
+    buyTokens,
+    voteForCandidate,
+    withdrawTokens,
+  ] = useVotingDapp(VOTING_TOKEN_ADDRESS);
 
   const triedToEagerConnect = useEagerConnect();
 
   const isConnected = typeof account === "string" && !!library;
 
   return (
-    <div>
+    <>
       <Head>
-        <title>next-web3-boilerplate</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>ClubVoting DApp</title>
       </Head>
-
-      <header>
-        <nav>
-          <Link href="/">
-            <a>next-web3-boilerplate</a>
-          </Link>
-
-          <Account triedToEagerConnect={triedToEagerConnect} />
-        </nav>
-      </header>
-
-      <main>
-        <h1>
-          Welcome to{" "}
-          <a href="https://github.com/mirshko/next-web3-boilerplate">
-            next-web3-boilerplate
-          </a>
-        </h1>
-
-        {isConnected && (
-          <section>
-            <ETHBalance />
-
-            <TokenBalance tokenAddress={DAI_TOKEN_ADDRESS} symbol="DAI" />
-          </section>
-        )}
-      </main>
-
-      <style jsx>{`
-        nav {
-          display: flex;
-          justify-content: space-between;
-        }
-
-        main {
-          text-align: center;
-        }
-      `}</style>
-    </div>
+      <DAppHeader triedToEagerConnect={triedToEagerConnect}></DAppHeader>
+      {isConnected ? (
+        <Container mb="40px">
+          <Stack>
+            <BuyTokens onBuy={buyTokens}></BuyTokens>
+            <Stats
+              contractState={contractState}
+              contractBalance={
+                contractBalance.data ? formatEther(contractBalance.data) : "0"
+              }
+              withdrawTokens={() => {
+                withdrawTokens(account);
+              }}
+            ></Stats>
+            <CandidateVotes
+              contractState={contractState}
+              onVote={voteForCandidate}
+            ></CandidateVotes>
+          </Stack>
+        </Container>
+      ) : (
+        <NotConnected></NotConnected>
+      )}
+    </>
   );
 }
 

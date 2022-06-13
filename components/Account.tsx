@@ -1,3 +1,4 @@
+import { Button } from "@mantine/core";
 import { useWeb3React } from "@web3-react/core";
 import { UserRejectedRequestError } from "@web3-react/injected-connector";
 import { useEffect, useState } from "react";
@@ -44,7 +45,8 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
     return (
       <div>
         {isWeb3Available ? (
-          <button
+          <Button
+            color={"dark"}
             disabled={connecting}
             onClick={() => {
               setConnecting(true);
@@ -60,9 +62,9 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
             }}
           >
             {isMetaMaskInstalled ? "Connect to MetaMask" : "Connect to Wallet"}
-          </button>
+          </Button>
         ) : (
-          <button onClick={startOnboarding}>Install Metamask</button>
+          <Button color={"orange"} onClick={startOnboarding}>Install Metamask</Button>
         )}
       </div>
     );
@@ -76,7 +78,7 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
         rel: "noopener noreferrer",
       }}
     >
-      {ENSName || `${shortenHex(account, 4)}`}
+     <Button  color="dark"> Connected to {ENSName || `${shortenHex(account, 4)}`} </Button>
     </a>
   );
 };
