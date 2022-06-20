@@ -16,7 +16,7 @@ import { CurrencyEthereum } from "tabler-icons-react";
 type StatsProps = {
   contractState: VotingContractState;
   contractBalance: string;
-  withdrawTokens: () => {};
+  withdrawTokens: () => void;
 };
 const ICON_SIZE = 60;
 

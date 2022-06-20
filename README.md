@@ -1,5 +1,24 @@
 A club voting decentralized application, powered by Next.js, web3-react and Ethereum.
 
+## Your Problem Statement
+
+- You run a blockchain club at college. You’re voting for a club lead, anyone can vote. But you want the votes to be verifiable and trustable
+- However, you also need funds. So you decide to create a smart contract and dApp that will let anyone vote by purchasing vote tokens using ether
+- Once the vote is done, you should be able to withdraw the amount contributed by everyone
+
+## Quick Setup
+
+1. Deploy the Voting Smart Contract (found at [contracts/ClubVoting.sol](/contracts/ClubVoting.sol)) using your deployment method of choice (for instance - use [Remix](http://remix.ethereum.org))
+2. Get the contract address from your deployment method and plug it into the `VOTING_CONTRACT_ADDRESS` constant in [pages/index.tsx](/pages/index.tsx)
+3. Install dependencies (`yarn install`)
+4. Run the development server (`yarn run start`)
+
+## Take-Home Challenge
+
+- Implement the capability to see all the votes performed by one address (auditability) [Difficulty - Easy]
+- Reduce gas usage of the contract (gas is money!) [Difficulty - Intermediate]
+- Use actual ERC20 tokens for facilitating voting [Difficulty - Hard]
+
 ## Features
 
 - Separate packages from [ethers.js](https://docs.ethers.io/v5/) for improved tree-shaking, often only ethers Contracts
