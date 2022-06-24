@@ -11,7 +11,7 @@ A club voting decentralized application, powered by Next.js, web3-react and Ethe
 1. Deploy the Voting Smart Contract (found at [contracts/ClubVoting.sol](/contracts/ClubVoting.sol)) using your deployment method of choice (for instance - use [Remix](http://remix.ethereum.org))
 2. Get the contract address from your deployment method and plug it into the `VOTING_CONTRACT_ADDRESS` constant in [pages/index.tsx](/pages/index.tsx)
 3. Install dependencies (`yarn install`)
-4. Run the development server (`yarn run start`)
+4. Run the development server (`yarn run dev`)
 
 ## Take-Home Challenge
 
