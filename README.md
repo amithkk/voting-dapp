@@ -15,9 +15,9 @@ A club voting decentralized application, powered by Next.js, web3-react and Ethe
 
 ## Take-Home Challenge
 
-- Implement the capability to see all the votes performed by one address (auditability) [Difficulty - Easy]
-- Reduce gas usage of the contract (gas is money!) [Difficulty - Intermediate]
-- Use actual ERC20 tokens for facilitating voting [Difficulty - Hard]
+- Implement the capability to see all the votes performed by one address (auditability) [Difficulty - Easy] [Contribute under issue #1 - https://github.com/amithkk/voting-dapp/issues/1]
+- Reduce gas usage of the contract (gas is money!) [Difficulty - Intermediate] [Contribute under issue #2 - https://github.com/amithkk/voting-dapp/issues/2]
+- Use ERC20 tokens for facilitating voting [Difficulty - Hard] [Contribute under issue #3 - https://github.com/amithkk/voting-dapp/issues/2]
 
 ## Features
 
