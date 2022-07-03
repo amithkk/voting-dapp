@@ -14,6 +14,7 @@ export type CandidateVotes = {
   candidateName: string;
   votes: number;
 };
+ 
 
 export type VotingContractState = {
   tokensForSale: number;
@@ -22,6 +23,11 @@ export type VotingContractState = {
   candidateVotes: CandidateVotes[];
   myTokens: number;
   owner: string;
+
+  // added these for the ShowVotesByAddress part.
+  voters:string[];
+  candidateList:string[];
+
 };
 
 export default function useVotingDapp(
@@ -31,7 +37,8 @@ export default function useVotingDapp(
   SWRResponse<BigNumber, any>,
   (noOfTokens) => Promise<void>,
   (candidateName, noOfTokens) => Promise<void>,
-  (toAddress) => Promise<void>
+  (toAddress) => Promise<void>,
+  (showVoterInfo) => Promise<[BigNumber,BigNumber[]]>
 ] {
   const contract = useVotingContract(tokenAddress);
   const [contractState, setContractState] = useState<VotingContractState>({
@@ -41,6 +48,8 @@ export default function useVotingDapp(
     candidateVotes: [],
     myTokens: 0,
     owner: "0x0",
+    voters:[''],
+    candidateList:[]
   });
   const contractBalance = useETHBalance(tokenAddress);
   const [currentCostInWei, setCurrentCostInWei] = useState<BigNumber>(
@@ -75,6 +84,22 @@ export default function useVotingDapp(
     });
   };
 
+  // new function added to call the contract to fetch voter info given an address
+  const showVoterInfo = async ( voterAddress : string) =>{
+    const err = [BigNumber.from(0),[ BigNumber.from(0)]]
+    console.log();
+    if (voterAddress == null){
+      alert("Choose an address first");
+      return err
+    }
+    let voterDetails = await contract.voterDetails(voterAddress).catch((err) => {
+      console.error(err);
+      alert("Could not find details");
+      return err;
+    });
+     return voterDetails;
+
+  }
   useEffect(() => {
     const refreshContactState = async () => {
       if (contract) {
@@ -94,13 +119,18 @@ export default function useVotingDapp(
         let myTokens = await (await contract.myTokenCount()).toNumber();
         let owner = await contract.owner();
 
-        setContractState({
+        // this will retrieve all the voters 
+         let voters = await contract.showAllVotersAddresses();
+       
+          setContractState({
           tokensForSale,
           tokensSold,
           pricePerToken,
           candidateVotes,
           myTokens,
           owner,
+          voters,
+          candidateList,
         });
       } else {
         console.log("No Contract Loaded");
@@ -120,5 +150,6 @@ export default function useVotingDapp(
     buyTokens,
     voteForCandidate,
     withdrawFunds,
+    showVoterInfo
   ];
 }

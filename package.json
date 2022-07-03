@@ -17,10 +17,11 @@
     "@ethersproject/strings": "^5.6.1",
     "@ethersproject/units": "^5.5.0",
     "@ethersproject/wallet": "^5.5.0",
-    "@mantine/core": "^4.2.9",
+    "@mantine/core": "^4.2.11",
     "@mantine/form": "^4.2.9",
-    "@mantine/hooks": "^4.2.9",
+    "@mantine/hooks": "^4.2.11",
     "@mantine/next": "^4.2.9",
+    "@material-ui/core": "^4.12.4",
     "@metamask/detect-provider": "^1.2.0",
     "@metamask/onboarding": "^1.0.1",
     "@web3-react/core": "^6.1.9",
@@ -28,9 +29,12 @@
     "@web3-react/types": "^6.0.7",
     "next": "12.1.0",
     "react": "17.0.2",
+    "react-accessible-accordion": "^5.0.0",
+    "react-bootstrap": "^2.4.0",
     "react-dom": "17.0.2",
     "swr": "^1.2.0",
-    "tabler-icons-react": "^1.48.1"
+    "tabler-icons-react": "^1.48.1",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@typechain/ethers-v5": "^9.0.0",
@@ -39,7 +43,7 @@
     "eslint": "8.8.0",
     "eslint-config-next": "12.0.9",
     "ethers": "^5.5.3",
-    "typechain": "^7.0.0",
+    "typechain": "^7.0.1",
     "typescript": "^4.5.5"
   }
 }

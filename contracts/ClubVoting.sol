@@ -15,11 +15,16 @@ contract Voting {
     mapping(bytes32 => uint256) public votesReceived;
 
     bytes32[] public candidateList;
+    address[] public voterAddresses;
 
     uint256 public totalTokens; // Total no. of tokens available for this election
     uint256 public balanceTokens; // Total no. of tokens still available for purchase
     uint256 public tokenPrice; // Price per token
 
+   
+
+ 
+   
     constructor(
         uint256 tokens,
         uint256 pricePerToken,
@@ -30,12 +35,15 @@ contract Voting {
         balanceTokens = tokens;
         tokenPrice = pricePerToken;
         owner = msg.sender;
+
+        // maximum number of unique voters will be equal to the total number of tokens purchasable
+        voterAddresses = new address[](totalTokens);
     }
 
     function totalVotesFor(bytes32 candidate) public view returns (uint256) {
         return votesReceived[candidate];
     }
-
+ 
     function voteForCandidate(bytes32 candidate, uint256 votesInTokens) public {
         uint256 index = indexOfCandidate(candidate);
         require(index != type(uint256).max);
@@ -48,7 +56,18 @@ contract Voting {
         uint256 availableTokens = voterInfo[msg.sender].tokensBought -
             totalTokensUsed(voterInfo[msg.sender].tokensUsedPerCandidate);
         require(availableTokens >= votesInTokens);
+        
+        // iterate through the voterAddresses array and check if we ever encountered the voter before. note that this is time intensive and may cost gas
+        for(uint256 i = 0; i < voterAddresses.length;i++){
+            if (voterAddresses[i] == msg.sender)
+            break;
+            if (voterAddresses[i] == address(0)){
+            voterAddresses[i] = msg.sender;    
+            break;    
+            }
+        }
 
+        
         votesReceived[candidate] += votesInTokens;
         voterInfo[msg.sender].tokensUsedPerCandidate[index] += votesInTokens;
     }
@@ -108,8 +127,15 @@ contract Voting {
         require(msg.sender == owner);
         payable(account).transfer(address(this).balance);
     }
+     
 
     function allCandidates() public view returns (bytes32[] memory) {
         return candidateList;
+    }
+        
+
+    // this function should return the currently present voter addresses.
+    function showAllVotersAddresses() public view returns (address[] memory) {
+        return voterAddresses;
     }
 }
