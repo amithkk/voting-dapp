@@ -15,8 +15,9 @@ import { formatEther } from "@ethersproject/units";
 import BuyTokens from "../components/BuyTokens";
 import CandidateVotes from "../components/CandidateVotes";
 import { NotConnected } from "../components/NotConnected";
+import ShowVotesByAddress from "../components/ShowVotesByAddress";
 
-const VOTING_TOKEN_ADDRESS = "0xD52072e44362245F7b13873b061932267D3819a6";
+const VOTING_TOKEN_ADDRESS = "0x09e7F09558f6b10B52C243A1d28E11556002265a";
 
 function Home() {
   const { account, library } = useWeb3React();
@@ -27,7 +28,8 @@ function Home() {
     buyTokens,
     voteForCandidate,
     withdrawTokens,
-  ] = useVotingDapp(VOTING_TOKEN_ADDRESS);
+    showVoterInfo,
+   ] = useVotingDapp(VOTING_TOKEN_ADDRESS);
 
   const triedToEagerConnect = useEagerConnect();
 
@@ -56,6 +58,10 @@ function Home() {
               contractState={contractState}
               onVote={voteForCandidate}
             ></CandidateVotes>
+
+            {/* showVotesbyAddress is a dropdown list of the addresses that purchased and voted at least once. */}
+            <ShowVotesByAddress contractState={contractState} 
+            onSubmit={showVoterInfo} ></ShowVotesByAddress>
           </Stack>
         </Container>
       ) : (
