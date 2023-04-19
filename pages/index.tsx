@@ -5,7 +5,6 @@ import Link from "next/link";
 import Account from "../components/Account";
 import ETHBalance from "../components/ETHBalance";
 import { DAppHeader } from "../components/DAppHeader";
-import TokenBalance from "../components/TokenBalance";
 import useEagerConnect from "../hooks/useEagerConnect";
 import useVotingContract from "../hooks/useVotingContract";
 import useVotingDapp from "../hooks/useVotingDapp";
