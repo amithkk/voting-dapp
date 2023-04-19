@@ -16,7 +16,7 @@ import BuyTokens from "../components/BuyTokens";
 import CandidateVotes from "../components/CandidateVotes";
 import { NotConnected } from "../components/NotConnected";
 
-const VOTING_TOKEN_ADDRESS = "0xD52072e44362245F7b13873b061932267D3819a6";
+const VOTING_TOKEN_ADDRESS = "0x4400B26c98Aa022918afFC89504DBEA7b7d539a9";
 
 function Home() {
   const { account, library } = useWeb3React();
